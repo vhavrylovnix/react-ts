@@ -1,4 +1,4 @@
-export const cellLabelSX = ({theme: Theme}) => ({
+export const cellLabelSX = () => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
