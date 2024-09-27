@@ -23,7 +23,7 @@ const columns: GridColDef[] = [
         headerName: 'Gender',
         width: 100,
         renderCell: (params) => (
-            <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%'}}>
+            <Box sx={cellLabelSX}>
                 {params.value === 'F' ? (
                     <FemaleIcon style={{ color: 'pink' }} />
                 ) : (
