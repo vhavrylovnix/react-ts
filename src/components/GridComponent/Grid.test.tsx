@@ -29,7 +29,7 @@ const mockResult = {
 
 const mockOnRowClick = jest.fn();
 
-describe('Grid Component', () => {
+describe('GridComponent Component', () => {
     it('renders grid', () => {
         render(<Grid rows={mockRows} columns={mockColumns} onRowClick={mockOnRowClick} />);
 

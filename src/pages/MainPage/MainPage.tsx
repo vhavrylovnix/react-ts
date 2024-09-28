@@ -12,11 +12,11 @@ import { PatientBillingData } from "../../interfaces/patients";
 import {fetchPatientBillingData} from "../../store/patientsSlice";
 import {useAppDispatch, useAppSelector} from "../../hooks/patients";
 
-import { Grid } from "../../components/Grid";
-import { CellLabelComponent } from "../../components/Grid/CellLabelComponent";
+import { Grid } from "../../components/GridComponent";
+import { CellLabelComponent } from "../../components/GridComponent/CellLabelComponent";
 import { SearchComponent } from "../../components/SearchComponent";
 import { SimpleTextComponent } from "../../components/SimpleTextComonent";
-import { CustomTabPanelComponent } from "../../components/Tab/CustopmTabPanelComponent";
+import { CustomTabPanelComponent } from "../../components/TabComponent/CustopmTabPanelComponent";
 import {a11yProps} from "./utils/a11yProps";
 
 const columns: GridColDef[] = [
