@@ -1,4 +1,4 @@
-import {CellGridEnums} from "../../../../enums/CellGridEnums.ts";
+import {CellGridEnums} from "../../../../enums/CellGridEnums";
 
 export const setColor = (color: string) : string => {
     if (color === CellGridEnums.GREEN) {

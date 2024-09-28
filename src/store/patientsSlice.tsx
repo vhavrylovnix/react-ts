@@ -1,6 +1,5 @@
-// patientBillingSlice.ts
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {PatientBillingData} from "../interfaces/patients.ts";
+import {PatientBillingData} from "../interfaces/patients";
 
 import billingData from '../helpers/data.json';
 

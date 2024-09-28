@@ -7,7 +7,7 @@ interface SearchComponentProps {
     onSearch: (query: string) => void; // Callback to pass the search query to the parent
 }
 
-const SearchComponent: React.FC<SearchComponentProps> = ({ onSearch }) => {
+export const SearchComponent: React.FC<SearchComponentProps> = ({ onSearch }) => {
     // Handle input changes and call the parent callback
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         onSearch(event.target.value.toLowerCase()); // Pass the search query back to the parent component
@@ -31,4 +31,3 @@ const SearchComponent: React.FC<SearchComponentProps> = ({ onSearch }) => {
     );
 };
 
-export default SearchComponent;

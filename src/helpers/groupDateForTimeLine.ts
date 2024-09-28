@@ -1,5 +1,7 @@
-export const groupByDate = (data) => {
-    const grouped = data.reduce((acc, curr) => {
+import {PatientBillingData} from "@/interfaces/patients";
+
+export const groupByDate = (data: PatientBillingData[]) => {
+    const grouped = data.reduce((acc: any, curr) => {
         const date = curr.dos_from;
         if (!acc[date]) {
             acc[date] = [];

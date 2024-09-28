@@ -1,19 +1,23 @@
-import {Box, CircularProgress, Typography} from "@mui/material";
-import Grid from "../../components/Grid/Grid.tsx";
+import {Box, CircularProgress, Tab, Tabs, Typography} from "@mui/material";
 import * as React from "react";
-import {useEffect, useState} from "react";
-import {PatientBillingData} from "../../interfaces/patients.ts";
-import {fetchPatientBillingData} from "../../store/patientsSlice.tsx";
-import {useAppDispatch, useAppSelector} from "../../hooks/patients.tsx";
-import SearchComponent from "../../components/Search/Search.tsx";
-import SimpleText from "../../components/SimpleText/SimpleText.tsx";
+import { useEffect, useState } from "react";
 import FemaleIcon from "@mui/icons-material/Female";
 import MaleIcon from "@mui/icons-material/Male";
-import {GridColDef} from "@mui/x-data-grid-premium";
-import BillingClassBadge from "../../components/Grid/CellLabel/CellLabel.tsx";
-import {cellLabelSX} from "./style.ts";
-import {cellLabelColor} from "./utils/cellLabelColor.ts";
+import { GridColDef } from "@mui/x-data-grid-premium";
 import CloseIcon from '@mui/icons-material/Close';
+import {cellLabelSX} from "./style";
+import {cellLabelColor} from "./utils/cellLabelColor";
+
+import { PatientBillingData } from "../../interfaces/patients";
+import {fetchPatientBillingData} from "../../store/patientsSlice";
+import {useAppDispatch, useAppSelector} from "../../hooks/patients";
+
+import { Grid } from "../../components/Grid";
+import { CellLabelComponent } from "../../components/Grid/CellLabelComponent";
+import { SearchComponent } from "../../components/SearchComponent";
+import { SimpleTextComponent } from "../../components/SimpleTextComonent";
+import { CustomTabPanelComponent } from "../../components/Tab/CustopmTabPanelComponent";
+import {a11yProps} from "./utils/a11yProps";
 
 const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 150 },
@@ -37,7 +41,7 @@ const columns: GridColDef[] = [
         headerName: 'Billing Class',
         width: 150,
         renderCell: (params) => (
-            <Box sx={cellLabelSX}> <BillingClassBadge color={cellLabelColor(params.value)} value={params.value} /> </Box>),
+            <Box sx={cellLabelSX}> <CellLabelComponent color={cellLabelColor(params.value)} value={params.value} /> </Box>),
     },
     { field: 'patient_id', headerName: 'Patient ID', width: 130 },
     { field: 'line', headerName: 'Line', width: 90 },
@@ -64,6 +68,8 @@ const MainPage: React.FC = () =>  {
     const { data, loading, error } = useAppSelector((state) => state.patientBilling);
     const [filteredRows, setFilteredRows] = useState(data);
 
+    const [value, setValue] = useState(0);
+
 
     useEffect(() => {
         dispatch(fetchPatientBillingData());
@@ -84,11 +90,10 @@ const MainPage: React.FC = () =>  {
 
     if (error) return <div>Error: {error}</div>;
 
-    // Handle the search query received from the SearchComponent
     const handleSearch = (query: string) => {
         // Filter rows based on the search query
         const filtered = data.filter(
-            (row) =>
+            (row : PatientBillingData) =>
                 row.id.toLowerCase().includes(query) ||
                 row.dob.toLowerCase().includes(query) ||
                 row.gender.toLowerCase().includes(query) ||
@@ -99,9 +104,14 @@ const MainPage: React.FC = () =>  {
         setSelectedRowData(null);
         setFilteredRows(filtered);
     };
-    // Callback function to handle row click from the child component
+
     const handleRowClick = (rowData: PatientBillingData) => {
         setSelectedRowData(rowData);
+    };
+
+    // @ts-ignore
+    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+        setValue(newValue);
     };
 
     return (
@@ -110,57 +120,60 @@ const MainPage: React.FC = () =>  {
             <Grid onRowClick={handleRowClick} rows={filteredRows} columns={columns}  paginationOption={[5,10,15]} />
             {selectedRowData && (
                 <Box sx={{marginTop: '20px', width: '100%', border: '1px solid rgba(224, 224, 224, 1)', padding: '15px', borderRadius: '8px'}}>
-                    <Box
-                        component='h3'
-                        sx={{color: '#1976d2'}}
-                    >
-                        Row Details
-                    </Box>
                     <Box sx={{ display: 'flex', flexDirection: 'row', gap: 20}}>
-                        <Box>
-                            {/* TODO:  better for UI using name / surname of patient instead ID is same thing for table, it help for user interface */}
-                            <SimpleText label={'Patient'} value={selectedRowData?.id} />
-
-                            <SimpleText label={'Gender'} value={
-                                <Box>
-                                    {selectedRowData?.gender === 'F' ? (
-                                        <FemaleIcon style={{ color: 'pink' }} />
-                                    ) : (
-                                        <MaleIcon style={{ color: 'blue' }} />
-                                    )}
-                                </Box>}
-                            />
-
-                            <SimpleText label={'Billing Class'} value={
-                                <BillingClassBadge color={cellLabelColor(selectedRowData?.billing_class)} value={selectedRowData?.billing_class} />
-                            } />
-
-                            <SimpleText label={'Last Visit'} value={selectedRowData?.dos_from} />
-
-                            <SimpleText label={'Code'} value={selectedRowData?.code} />
-
-                            {/* TODO:  As I know most unit has a name, and on table it some think like ID, better to use API call, maybe for transform ID to unit name */}
-                            <SimpleText label={'Unit'} value={selectedRowData?.units} />
-
-                        </Box>
-                        <Box>
-                            <Box component='h4' sx={{color: '#1976d2', margin: '0'}}>
-                                Additional Info
+                        <Box sx={{ width: '100%' }}>
+                            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                                    <Tab label="General" {...a11yProps(0)} />
+                                    <Tab label="Additional" {...a11yProps(1)} />
+                                </Tabs>
                             </Box>
+                            <CustomTabPanelComponent value={value} index={0}>
+                                <Box sx={{display: 'flex', flexDirection: 'column', gap: '5px'}}>
+                                    {/* TODO:  better for UI using name / surname of patient instead ID is same thing for table, it help for user interface */}
+                                    <SimpleTextComponent label={'Patient'} value={selectedRowData?.id} />
 
-                            <SimpleText label={'Provider'} value={selectedRowData?.rend_provider_id} />
+                                    <SimpleTextComponent label={'Gender'} >
+                                        <Box>
+                                            {selectedRowData?.gender === 'F' ? (
+                                                <FemaleIcon style={{ color: 'pink' }} />
+                                            ) : (
+                                                <MaleIcon style={{ color: 'blue' }} />
+                                            )}
+                                        </Box>
+                                    </SimpleTextComponent>
 
-                            <SimpleText label={'DX1'} value={selectedRowData?.dx1} />
+                                    <SimpleTextComponent label={'Billing Class'} >
+                                        <Box sx={{width: 'fit-content'}}>
+                                            <CellLabelComponent color={cellLabelColor(selectedRowData?.billing_class)} value={selectedRowData?.billing_class} />
+                                        </Box>
+                                    </SimpleTextComponent>
 
-                            <SimpleText label={'DX2'} value={selectedRowData?.dx2} />
+                                    <SimpleTextComponent label={'Last Visit'} value={selectedRowData?.dos_from} />
 
-                            <SimpleText label={'Allowed'} value={selectedRowData?.allowed} />
+                                    <SimpleTextComponent label={'Code'} value={selectedRowData?.code} />
 
-                            <SimpleText label={'Benifit'} value={selectedRowData?.benefit} />
+                                    {/* TODO:  As I know most unit has a name, and on table it some think like ID, better to use API call, maybe for transform ID to unit name */}
+                                    <SimpleTextComponent label={'Unit'} value={selectedRowData?.units.toString()} />
 
+                                </Box>
+                            </CustomTabPanelComponent>
+                            <CustomTabPanelComponent value={value} index={1}>
+                                <Box sx={{display: 'flex', flexDirection: 'column', gap: '5px'}}>
+                                    <SimpleTextComponent label={'Provider'} value={selectedRowData?.rend_provider_id.toString()} />
+
+                                    <SimpleTextComponent label={'DX1'} value={selectedRowData?.dx1} />
+
+                                    <SimpleTextComponent label={'DX2'} value={selectedRowData?.dx2} />
+
+                                    <SimpleTextComponent label={'Allowed'} value={selectedRowData?.allowed.toString()} />
+
+                                    <SimpleTextComponent label={'Benifit'} value={selectedRowData?.benefit.toString()} />
+
+                                </Box>
+                            </CustomTabPanelComponent>
                         </Box>
                     </Box>
-
                 </Box>
             )}
         </Box>

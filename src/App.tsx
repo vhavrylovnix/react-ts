@@ -1,11 +1,11 @@
-import React, {lazy, Suspense, useState} from 'react'
+import React, { Suspense } from 'react'
 import './App.css'
 import {Route, Routes} from "react-router-dom";
 import {Box, CircularProgress} from "@mui/material";
-import Layout from "./components/Layout/Layout.tsx";
+import { Layout } from "./components/Layout/";
 
 const MainPage = React.lazy(() => import('./pages/MainPage/MainPage'));
-const TimeLinePage = React.lazy(() => import('./pages/TimeLinePage/TimeLinePage.tsx'));
+const TimeLinePage = React.lazy(() => import('./pages/TimeLinePage/TimeLinePage'));
 function App() {
 
   return (
@@ -21,7 +21,7 @@ function App() {
                   <Routes>
                       <Route element={<MainPage />} path="/" />
                       <Route element={<TimeLinePage />} path="/timeline" />
-                      <Route element={<MainPage />} path="*" exact={true} />
+                      <Route element={<MainPage />} path="*"/>
                   </Routes>
               </Suspense>
           </Layout>

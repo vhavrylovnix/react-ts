@@ -1,0 +1,1 @@
+export { SimpleTextComponent } from "./SimpleTextCoponent"

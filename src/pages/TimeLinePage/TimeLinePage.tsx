@@ -1,21 +1,21 @@
-import React, {useEffect, useState} from 'react';
-import {Box, Typography, Link, Button, CircularProgress} from '@mui/material';
-import {useAppDispatch, useAppSelector} from "../../hooks/patients.tsx";
-import {fetchPatientBillingData} from "../../store/patientsSlice.tsx";
-import TimelineContainer from "../../components/TimeLine/TimeLineContainer/TimeLineContainer.tsx";
-import TimelineItem from "../../components/TimeLine/TimeLineItem/TimeLineItem.tsx";
-import {getLabel} from "../../helpers/getLabelCode.ts";
-import TagComponent from "../../components/Tag/Tag.tsx";
-import TimelineDot from "../../components/TimeLine/TimeLineDots/TimeLineDots.tsx";
-import { groupByDate } from "../../helpers/groupDateForTimeLine.ts";
-import {PatientBillingData} from "../../interfaces/patients.ts";
-import {timeLineContainerSX} from "./style.ts";
+import { useEffect, useState } from 'react';
+import { Box, Typography, Link, Button, CircularProgress } from '@mui/material';
+import { useAppDispatch, useAppSelector } from "../../hooks/patients";
+import { fetchPatientBillingData } from "../../store/patientsSlice";
+import { TimelineContainer } from "../../components/TimeLine/TimeLineContainer";
+import { TimelineItem } from "../../components/TimeLine/TimeLineItem";
+import { getLabel } from "../../helpers/getLabelCode";
+import { TagComponent } from "../../components/TagComponent";
+import { TimelineDot } from "../../components/TimeLine/TimeLineDots";
+import { groupByDate } from "../../helpers/groupDateForTimeLine";
+import { timeLineContainerSX } from "./style";
+import { PatientBillingData } from "../../interfaces/patients";
 
 
 const TimeLinePage = () => {
     const [isHorizontal, setisHorizontal] = useState<boolean>(false);
     const [loading, setLoading] = useState(true);
-    const [mappedData, setMappedData] = useState<Record<string, [PatientBillingData[]]>>({});
+    const [mappedData, setMappedData] = useState<Record<string, any>>({});
     const dispatch = useAppDispatch();
     const { data} = useAppSelector((state) => state.patientBilling);
 
@@ -54,11 +54,11 @@ const TimeLinePage = () => {
             </Button>
             <TimelineContainer isHorizontal={isHorizontal}>
                 {mappedData && Object.entries(mappedData).map(([date, events], index) => {
-                    const totalAllowed = events.reduce((sum, item) => sum + Number(item.allowed), 0);
+                    const totalAllowed = events.reduce((sum: number, item: PatientBillingData) => sum + Number(item.allowed), 0);
                     // TODO: 5k it so small for current grid so we increase to 10k
                     const isHighExpense = totalAllowed > 10000;
                     return (
-                        <Box key={index} sx={timeLineContainerSX}>
+                        <Box key={index} sx={timeLineContainerSX(isHorizontal)}>
                             <TimelineDot isHorizontal={isHorizontal} />
                             <TimelineItem>
                                 {isHighExpense && (
@@ -74,7 +74,7 @@ const TimeLinePage = () => {
                                     Total Allowed: ${totalAllowed.toFixed(2)}
                                 </Typography>
                                 <Box component="ul" sx={{ padding: 0, margin: 0, listStyle: 'none', marginTop: '10px', marginBottom: '10px' }}>
-                                    {events.map((event, idx) => (
+                                    {events.map((event: PatientBillingData, idx: number) => (
                                         <Box component="li" key={idx}>
                                             <Link
                                                 href={`https://www.aapc.com/codes/cpt-codes/${event.code}`}

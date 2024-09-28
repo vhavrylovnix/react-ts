@@ -3,8 +3,7 @@ import { Box, styled } from '@mui/material';
 interface TimelineDotProps {
     isHorizontal: boolean;
 }
-
-const TimelineDot = styled(Box)<TimelineDotProps>(({ isHorizontal, ...reset }) => ({
+export const TimelineDot = styled(Box)<TimelineDotProps>(({ isHorizontal }) => ({
     position: 'absolute',
     width: '14px',
     height: '14px',
@@ -15,5 +14,3 @@ const TimelineDot = styled(Box)<TimelineDotProps>(({ isHorizontal, ...reset }) =
     top: isHorizontal ? '0' : '0',
     transform: isHorizontal ? 'translateY(-50%)' : 'translateX(-50%)',
 }));
-
-export default TimelineDot;

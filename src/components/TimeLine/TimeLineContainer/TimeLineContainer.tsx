@@ -4,11 +4,11 @@ interface TimelineContainerProps {
     isHorizontal: boolean;
 }
 
-const TimelineContainer = styled(Box)<TimelineContainerProps>(({ isHorizontal, ...reset }) => ({
+export const TimelineContainer = styled(Box)<TimelineContainerProps>(({ isHorizontal }) => ({
     display: 'flex',
     flexDirection: isHorizontal ? 'row' : 'column',
     overflow: 'auto',
-    paddingLeft: '7px'
+    paddingLeft: '7px',
+    paddingTop: isHorizontal ? '7px' : '0'
 }));
 
-export default TimelineContainer;

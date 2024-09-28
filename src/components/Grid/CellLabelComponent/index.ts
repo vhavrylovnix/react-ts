@@ -1,0 +1,1 @@
+export { CellLabelComponent } from "./CellLabelComponent"

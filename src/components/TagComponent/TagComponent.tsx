@@ -10,7 +10,7 @@ interface TagProps {
     isHorizontal: boolean;
 }
 
-const Tag = styled(Box)<TagProps>(({ isHorizontal, ...reset }) => ({
+const Tag = styled(Box)<TagProps>(({ isHorizontal }) => ({
     backgroundColor: '#f05454',
     position: 'absolute',
     left:  isHorizontal ? '140px' : '325px',
@@ -22,8 +22,6 @@ const Tag = styled(Box)<TagProps>(({ isHorizontal, ...reset }) => ({
     display: 'inline-block',
 }));
 
-const TagComponent: React.FC<TagComponent> = ({ text, isHorizontal, ...reset  }) => {
+export const TagComponent: React.FC<TagComponent> = ({ text, isHorizontal  }) => {
     return <Tag isHorizontal={isHorizontal}>{text}</Tag>;
 };
-
-export default TagComponent;

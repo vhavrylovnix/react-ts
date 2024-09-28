@@ -1,4 +1,4 @@
-export const getLabel = (code): string => {
+export const getLabel = (code: string): string => {
     if (code.startsWith('99')) return 'Evaluation and Management (E/M)';
     if (code.startsWith('11')) return 'Surgery';
     if (code.startsWith('71') || code.startsWith('73')) return 'Radiology';

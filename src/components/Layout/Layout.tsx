@@ -103,7 +103,7 @@ interface LayoutProps {
 }
 
 // Define the Layout component as an arrow function with TypeScript
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+export const Layout: React.FC<LayoutProps> = ({ children }) => {
     const theme = useTheme();
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
@@ -177,4 +177,3 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     );
 };
 
-export default Layout;

@@ -15,7 +15,7 @@ interface GridProps {
     onRowClick: (row: PatientBillingData) => void;
 }
 
-const Grid: React.FC<GridProps> = ({
+export const Grid: React.FC<GridProps> = ({
         rows,
         columns,
         paginationOption = [5, 10, 15],
@@ -44,7 +44,6 @@ const Grid: React.FC<GridProps> = ({
                 paginationModel={paginationModel}
                 pageSizeOptions={paginationOption}
                 onPaginationModelChange={handlePaginationModelChange}
-                rowsPerPageOptions={paginationOption}
                 onRowClick={handleRowClick}
                 getRowId={(row) => `${row.id}-${row.line}-${row.code}`} // Ensure correct identification
             />
@@ -52,4 +51,3 @@ const Grid: React.FC<GridProps> = ({
     );
 };
 
-export default Grid;
