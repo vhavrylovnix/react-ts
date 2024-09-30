@@ -1,6 +1,5 @@
 module.exports = {
   testTimeout: 60000,
-  // TODO: remove workerIdleMemoryLimit once authoring-ui will use NodeJS 20.11 LTS. Make sure the tests do not consume a lot of memory.
   workerIdleMemoryLimit: '512MB',
   setupFilesAfterEnv: ['<rootDir>jest.setup.ts'],
   coveragePathIgnorePatterns: [
