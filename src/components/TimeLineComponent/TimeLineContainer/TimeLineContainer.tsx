@@ -10,14 +10,8 @@ export const TimelineContainer = styled(Box)<TimelineContainerProps>(({ isHorizo
   overflow: 'auto',
   position: 'relative',
   width: isHorizontal ? '100%' : '1200px',
-  maxHeight:  isHorizontal ? '900px' : 'auto',
-  height: isHorizontal ? '900px' : 'auto',
+  maxHeight:  isHorizontal ? '700px' : 'auto',
+  height: isHorizontal ? '700px' : 'auto',
   margin: ' 0 auto',
 }));
 
-
-
-
-
-// paddingLeft: '7px',
-// paddingTop: isHorizontal ? '7px' : '0',
