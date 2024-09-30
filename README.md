@@ -28,9 +28,8 @@ run test
 npm run test
 ```
 
-
+## Structure
 ```bash
-
 .
 ├── public
 │  
