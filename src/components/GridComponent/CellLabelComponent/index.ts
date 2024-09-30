@@ -1,1 +1,1 @@
-export { CellLabelComponent } from "./CellLabelComponent"
+export { CellLabelComponent } from './CellLabelComponent';
