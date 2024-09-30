@@ -1,1 +1,1 @@
-export { SimpleTextComponent } from "./SimpleTextCoponent"
+export { SimpleTextComponent } from './SimpleTextCoponent';
