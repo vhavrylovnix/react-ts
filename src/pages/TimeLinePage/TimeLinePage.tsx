@@ -5,9 +5,8 @@ import { TimelineContainer } from '../../components/TimeLineComponent/TimeLineCo
 import { TimelineItem } from '../../components/TimeLineComponent/TimeLineItem';
 import { getLabel } from '../../helpers/getLabelCode';
 import { TagComponent } from '../../components/TagComponent';
-import { TimelineDot } from '../../components/TimeLineComponent/TimeLineDots';
 import { groupByDate } from '../../helpers/groupDateForTimeLine';
-import { timeLineContainerSX } from './style';
+import { leftTimeLineContainerSX, rightTimeLineContainerSX } from './style';
 import { PatientBillingData } from '../../interfaces/patients';
 import { fetchPatientBillingData } from '../../api/patient';
 
@@ -43,7 +42,6 @@ const TimeLinePage = () => {
           alignItems: 'center',
         }}
       >
-        {' '}
         <CircularProgress size={100} />{' '}
       </Box>
     );
@@ -61,8 +59,7 @@ const TimeLinePage = () => {
             // TODO: 5k it so small for current grid so we increase to 10k
             const isHighExpense = totalAllowed > 10000;
             return (
-              <Box key={index} sx={timeLineContainerSX(isHorizontal)}>
-                <TimelineDot isHorizontal={isHorizontal} />
+              <Box key={index} sx={index % 2 === 0 ? leftTimeLineContainerSX(isHorizontal) : rightTimeLineContainerSX(isHorizontal)}>
                 <TimelineItem>
                   {isHighExpense && <TagComponent isHorizontal={isHorizontal} text={'HIGH EXPENSE'}></TagComponent>}
                   <Typography variant='caption' color='textSecondary'>

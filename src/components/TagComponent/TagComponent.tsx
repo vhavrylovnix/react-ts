@@ -12,8 +12,8 @@ interface TagProps {
 
 const Tag = styled(Box)<TagProps>(({ isHorizontal }) => ({
   backgroundColor: '#f05454',
-  position: 'absolute',
-  left: isHorizontal ? '140px' : '325px',
+  position: 'relative',
+  left:  '-5px',
   color: '#fff',
   padding: '2px 8px',
   borderRadius: '4px',
